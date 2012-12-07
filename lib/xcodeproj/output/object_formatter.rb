@@ -9,6 +9,13 @@ module Xcodeproj
           "unknown"
         end
 
+        def output_to_formatter (formatter)
+          formatter.add_line "#{uuid} = {"
+          formatter.indent
+          formatter.unindent
+          formatter.add_line "};"
+        end
+
       end
     end
   end

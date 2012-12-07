@@ -85,6 +85,43 @@ module ProjectSpecs
         output.index('/* End PBXSourcesBuildPhase section */').should < output.index('/* Begin PBXTargetDependency section */')
         output.index('/* End XCConfigurationList section */').should < output.index('/* Begin XCVersionGroup section */')
       end
+
+      it "output PBXAggregateTarget objects" do
+        @project.to_pbxproj.should.include "E550D6AA16371AF600A003E9"
+      end
+
+      it "output PBXBuildFile objects" do
+        @project.to_pbxproj.should.include "E525239116245A900012E2BA"
+        @project.to_pbxproj.should.include "E525239B16245A900012E2BA"
+        @project.to_pbxproj.should.include "E525239D16245A900012E2BA"
+        @project.to_pbxproj.should.include "E550D84B16371BD000A003E9"
+        @project.to_pbxproj.should.include "E5FBB2D116357C16009E96B0"
+      end
+
+      it "output PBXBuildFile objects in alphabetical order" do
+        output = @project.to_pbxproj
+        output.index('E525239116245A900012E2BA').should < output.index('E525239B16245A900012E2BA')
+        output.index('E525239B16245A900012E2BA').should < output.index('E525239D16245A900012E2BA')
+        output.index('E525239D16245A900012E2BA').should < output.index('E550D84B16371BD000A003E9')
+        output.index('E550D84B16371BD000A003E9').should < output.index('E5FBB2D116357C16009E96B0')
+      end
+
+      it "output XCVersionGroup objects" do
+        @project.to_pbxproj.should.include "E52523AB16245A910012E2BA"
+        @project.to_pbxproj.should.include "E525241116245AB20012E2BA"
+        @project.to_pbxproj.should.include "E5D464AB163578AC006A4730"
+        @project.to_pbxproj.should.include "E5D464AE163578C7006A4730"
+        @project.to_pbxproj.should.include "E5D464B216357954006A4730"
+      end
+
+      it "output XCVersionGroup objects in alphabetical order" do
+        output = @project.to_pbxproj
+        output.index('E52523AB16245A910012E2BA').should < output.index('E525241116245AB20012E2BA')
+        output.index('E525241116245AB20012E2BA').should < output.index('E5D464AB163578AC006A4730')
+        output.index('E5D464AB163578AC006A4730').should < output.index('E5D464AE163578C7006A4730')
+        output.index('E5D464AE163578C7006A4730').should < output.index('E5D464B216357954006A4730')
+      end
+
     end
 
   end
