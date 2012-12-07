@@ -30,7 +30,28 @@ module Xcodeproj
     end
 
     def add_value_for_key (value, key)
+      if (value.is_a?(String))
+        add_string_value_for_key value, key
+        return
+      end
+      if (value.is_a?(Hash))
+        add_hash_value_for_key value, key
+        return
+      end
+    end
+
+    def add_string_value_for_key (value, key)
       add_line "#{key} = #{value};"
+    end
+
+    def add_hash_value_for_key (value, key)
+      add_line "#{key} = {"
+      indent
+      value.each_pair do |hash_key, hash_value|
+        add_value_for_key hash_value, hash_key
+      end
+      unindent
+      add_line "};"
     end
 
     def << (line)

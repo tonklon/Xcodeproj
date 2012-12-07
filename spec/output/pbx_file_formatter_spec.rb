@@ -53,9 +53,27 @@ describe "Xcodeproj::PBXFileFormatter" do
   end
 
   describe "add key value pairs" do
-    it "adds an key value pair" do
+    it "adds an key value pair with string value" do
       @formatter.add_value_for_key "Foo", "Bar"
       @formatter.lines.should.include "Bar = Foo;"
+    end
+
+    it "adds an key value pair with hash value" do
+      @formatter.add_value_for_key ({"Foo" => "FooBar"}), "Bar"
+      @formatter.lines.should.include "Bar = {"
+      @formatter.lines.should.include "\tFoo = FooBar;"
+      @formatter.lines.should.include "};"
+    end
+
+    it "adds an key value pair with empty hash value" do
+      @formatter.add_value_for_key Hash.new, "Bar"
+      @formatter.lines.should.include "Bar = {"
+      @formatter.lines.should.include "};"
+    end
+
+    it "doesn't add an key value pair with nil value" do
+      @formatter.add_value_for_key nil, "Bar"
+      @formatter.lines.size.should == 0
     end
   end
 
