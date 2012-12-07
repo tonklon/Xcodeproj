@@ -8,6 +8,9 @@ module ProjectSpecs
         @project.to_pbxproj.should.include "// !$*UTF8*$!\n"
       end
 
+      it "output the archive version" do
+        @project.to_pbxproj.should.include "archiveVersion = 1;"
+      end
     end
 
   end
