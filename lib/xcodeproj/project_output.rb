@@ -1,10 +1,15 @@
+require "xcodeproj/output/pbx_file_formatter"
+
 module Xcodeproj
 
   class Project
     def to_pbxproj
-      pbxproj = "// !$*UTF8*$!\n"
-      pbxproj << "{\n"
-      pbxproj << "\tarchiveVersion = #{archive_version};\n"
+      formatter = Xcodeproj::PBXFileFormatter.new
+      formatter << "// !$*UTF8*$!"
+      formatter << "{"
+      formatter.indent
+      formatter << "archiveVersion = #{archive_version};"
+      formatter.formatted_file
     end
   end
 
