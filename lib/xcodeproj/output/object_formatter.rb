@@ -10,7 +10,8 @@ module Xcodeproj
         end
 
         def output_to_formatter (formatter)
-          formatter.add_line "#{uuid} = {"
+          comment = reference_comment.nil? ? "" : " /* #{reference_comment} */"
+          formatter.add_line "#{uuid}#{comment} = {"
           formatter.indent
           output_attributes_to_formatter formatter
           formatter.unindent
