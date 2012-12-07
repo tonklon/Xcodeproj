@@ -38,6 +38,10 @@ module Xcodeproj
         add_hash_value_for_key value, key
         return
       end
+      if (value.respond_to?(:reference_comment) && value.respond_to?(:uuid))
+        add_string_value_for_key "#{value.uuid} /* #{value.reference_comment} */", key
+        return
+      end
     end
 
     def add_string_value_for_key (value, key)

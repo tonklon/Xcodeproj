@@ -71,6 +71,20 @@ describe "Xcodeproj::PBXFileFormatter" do
       @formatter.lines.should.include "};"
     end
 
+    it "adds an key value pair with an object reference" do
+      class TestObjectReference
+        def uuid
+          "1234"
+        end
+        def reference_comment
+          "comment"
+        end
+      end
+
+      @formatter.add_value_for_key TestObjectReference.new, "Key"
+      @formatter.lines.should.include "Key = 1234 /* comment */;"
+    end
+
     it "doesn't add an key value pair with nil value" do
       @formatter.add_value_for_key nil, "Bar"
       @formatter.lines.size.should == 0
