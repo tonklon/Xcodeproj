@@ -1,6 +1,7 @@
 require 'fileutils'
 require 'pathname'
 require 'xcodeproj/xcodeproj_ext'
+require 'xcodeproj/project_output'
 
 require 'xcodeproj/project/object'
 require 'xcodeproj/project/recursive_diff'
