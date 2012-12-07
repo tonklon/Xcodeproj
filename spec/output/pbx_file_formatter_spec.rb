@@ -72,6 +72,15 @@ describe "Xcodeproj::PBXFileFormatter" do
       @formatter.lines.should.include "};"
     end
 
+    it "sorts added hashes by key" do
+      @formatter.add_value_for_key ({"B" => "Foo","D" => "Bar","C" => "Foo", "A" => "Bar"}), "Bar"
+      @formatter.lines.should.include "Bar = {"
+      @formatter.lines.index("\tA = Bar;").should < @formatter.lines.index("\tB = Foo;")
+      @formatter.lines.index("\tB = Foo;").should < @formatter.lines.index("\tC = Foo;")
+      @formatter.lines.index("\tC = Foo;").should < @formatter.lines.index("\tD = Bar;")
+      @formatter.lines.should.include "};"
+    end
+
     it "adds an key value pair with empty hash value" do
       @formatter.add_value_for_key Hash.new, "Bar"
       @formatter.lines.should.include "Bar = {"

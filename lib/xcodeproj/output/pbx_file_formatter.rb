@@ -57,7 +57,8 @@ module Xcodeproj
     def add_hash_value_for_key (value, key)
       add_line "#{key} = {"
       indent
-      value.each_pair do |hash_key, hash_value|
+      value.keys.sort.each do |hash_key|
+        hash_value = value[hash_key]
         add_value_for_key hash_value, hash_key
       end
       unindent
