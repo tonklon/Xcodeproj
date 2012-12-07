@@ -6,7 +6,7 @@ module Xcodeproj
       class AbstractObject
 
         def reference_comment
-          "unknown"
+          nil
         end
 
         def output_to_formatter (formatter)
@@ -29,7 +29,8 @@ module Xcodeproj
                 formatter.add_line "#{attribute.plist_name} = ("
                 formatter.indent
                 attribute.get_value(self).each do |object|
-                  formatter.add_line "#{object.uuid} /* #{object.reference_comment} */,"
+                  comment = object.reference_comment.nil? ? "" : " /* #{object.reference_comment} */"
+                  formatter.add_line "#{object.uuid}#{comment},"
                 end
                 formatter.unindent
                 formatter.add_line ");"
