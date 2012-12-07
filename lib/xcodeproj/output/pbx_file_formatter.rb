@@ -9,6 +9,7 @@ module Xcodeproj
   class PBXFileFormatter
 
     attr_reader :indentation_level
+    attr_reader :lines
 
     def initialize
       @lines = Array.new
@@ -23,5 +24,14 @@ module Xcodeproj
       raise "Can not decrement below 0" if @indentation_level == 0
       @indentation_level -= 1
     end
+
+    def add_line (line)
+      @lines << "#{"\t" * @indentation_level}#{line}"
+    end
+
+    def << (line)
+      add_line line
+    end
+
   end
 end

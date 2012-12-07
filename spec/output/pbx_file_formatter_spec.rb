@@ -33,4 +33,23 @@ describe "Xcodeproj::PBXFileFormatter" do
     end
   end
 
+  describe "add lines" do
+    it "adds lines" do
+      @formatter.add_line "Foo"
+      @formatter.lines.size.should == 1
+      @formatter.lines.should.include "Foo"
+    end
+
+    it "adds lines with << operator" do
+      @formatter << "Foo"
+      @formatter.lines.should.include "Foo"
+    end
+
+    it "adds lines with indentation" do
+      @formatter.indent
+      @formatter.add_line "Foo"
+      @formatter.lines.should.include "\tFoo"
+    end
+  end
+
 end
