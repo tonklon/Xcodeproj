@@ -31,6 +31,10 @@ module Xcodeproj
       @lines << "#{"\t" * @indentation_level}#{line}"
     end
 
+    def add_unindented_line (line)
+      @lines << line
+    end
+
     def add_value_for_key (value, key)
       if (value.is_a?(String))
         add_string_value_for_key value, key

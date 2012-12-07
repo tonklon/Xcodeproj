@@ -50,6 +50,13 @@ describe "Xcodeproj::PBXFileFormatter" do
       @formatter.add_line "Foo"
       @formatter.lines.should.include "\tFoo"
     end
+
+    it "adds lines without indentation" do
+      @formatter.indent
+      @formatter.add_unindented_line "Foo"
+      @formatter.lines.should.include "Foo"
+    end
+
   end
 
   describe "add key value pairs" do
