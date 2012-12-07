@@ -3,9 +3,10 @@ module Xcodeproj
   require 'colored'
 
   class Command
-    autoload :TargetDiff,  'xcodeproj/command/target_diff'
-    autoload :ProjectDiff, 'xcodeproj/command/project_diff'
-    autoload :Show,        'xcodeproj/command/show'
+    autoload :TargetDiff,     'xcodeproj/command/target_diff'
+    autoload :ProjectDiff,    'xcodeproj/command/project_diff'
+    autoload :ProjectRewrite, 'xcodeproj/command/project_rewrite'
+    autoload :Show,           'xcodeproj/command/show'
 
     class Help < StandardError
       def initialize(command_class, argv, unrecognized_command = nil)
@@ -89,9 +90,10 @@ module Xcodeproj
       String.send(:define_method, :colorize) { |string , _| string } if argv.option( '--no-color' )
 
       command_class = case command_argument = argv.shift_argument
-      when 'target-diff'  then TargetDiff
-      when 'project-diff' then ProjectDiff
-      when 'show'         then Show
+      when 'target-diff'     then TargetDiff
+      when 'project-diff'    then ProjectDiff
+      when 'project-rewrite' then ProjectRewrite
+      when 'show'            then Show
       end
 
       if command_class.nil?
