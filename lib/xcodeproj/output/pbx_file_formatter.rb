@@ -1,3 +1,5 @@
+require 'xcodeproj/output/object_formatter'
+
 module Xcodeproj
 
   # Helper class to manage output to pbxproj formatted files.

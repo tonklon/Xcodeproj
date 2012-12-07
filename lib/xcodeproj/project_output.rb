@@ -9,6 +9,9 @@ module Xcodeproj
       formatter << "{"
       formatter.indent
       formatter.add_value_for_key archive_version, "archiveVersion"
+      formatter.add_value_for_key classes, "classes"
+      formatter.add_value_for_key object_version, "objectVersion"
+      formatter.add_value_for_key root_object, "rootObject"
       formatter.unindent
       formatter.formatted_file
     end
