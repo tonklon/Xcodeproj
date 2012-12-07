@@ -44,6 +44,10 @@ module Xcodeproj
         add_hash_value_for_key value, key
         return
       end
+      if (value.is_a?(Array))
+        add_array_value_for_key value, key
+        return
+      end
       if (value.respond_to?(:reference_comment) && value.respond_to?(:uuid))
         add_string_value_for_key "#{value.uuid} /* #{value.reference_comment} */", key
         return
@@ -63,6 +67,16 @@ module Xcodeproj
       end
       unindent
       add_line "};"
+    end
+
+    def add_array_value_for_key (value, key)
+      add_line "#{key} = ("
+      indent
+      value.each do |string|
+        add_line "#{quoted_string string},"
+      end
+      unindent
+      add_line ");"
     end
 
     def << (line)

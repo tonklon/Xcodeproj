@@ -87,6 +87,14 @@ describe "Xcodeproj::PBXFileFormatter" do
       @formatter.lines.should.include "};"
     end
 
+    it "adds an key value pair with array value" do
+      @formatter.add_value_for_key (["Foo", "Bar"]), "Bar"
+      @formatter.lines.should.include "Bar = ("
+      @formatter.lines.should.include "\tFoo,"
+      @formatter.lines.should.include "\tBar,"
+      @formatter.lines.should.include ");"
+    end
+
     it "adds an key value pair with an object reference" do
       class TestObjectReference
         def uuid
