@@ -52,4 +52,28 @@ describe "Xcodeproj::PBXFileFormatter" do
     end
   end
 
+  describe "output" do
+    it "returns string output" do
+      @formatter.formatted_file.should == ""
+    end
+
+    it "returns an added line" do
+      @formatter << "Foo"
+      @formatter.formatted_file.should == "Foo"
+    end
+
+    it "returns several lines separated with newlines" do
+      @formatter << "Foo"
+      @formatter << "Bar"
+      @formatter.formatted_file.should == "Foo\nBar"
+    end
+
+    it "does not include a newline for the last line" do
+      @formatter << "1"
+      @formatter << "2"
+      @formatter.formatted_file.should.include "1\n"
+      @formatter.formatted_file.should.not.include "2\n"
+    end
+  end
+
 end

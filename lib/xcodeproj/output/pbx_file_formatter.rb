@@ -33,5 +33,8 @@ module Xcodeproj
       add_line line
     end
 
+    def formatted_file
+      @lines.join("\n")
+    end
   end
 end
