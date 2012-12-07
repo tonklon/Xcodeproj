@@ -11,9 +11,13 @@ module Xcodeproj
       formatter.add_value_for_key archive_version, "archiveVersion"
       formatter.add_value_for_key classes, "classes"
       formatter.add_value_for_key object_version, "objectVersion"
+      formatter.add_line "objects = {"
+      formatter.indent
 
       add_objects_to_formatter formatter
 
+      formatter.unindent
+      formatter.add_line "};"
       formatter.add_value_for_key root_object, "rootObject"
       formatter.unindent
       formatter.formatted_file

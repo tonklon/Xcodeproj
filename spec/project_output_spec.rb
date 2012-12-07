@@ -29,6 +29,10 @@ module ProjectSpecs
         @project.to_pbxproj.should.include "rootObject = E525238316245A900012E2BA /* Project object */;"
       end
 
+      it "output the objects" do
+        @project.to_pbxproj.should.include "objects = {"
+      end
+
       it "output all object groups" do
         output = @project.to_pbxproj
         output.should.include "/* Begin PBXAggregateTarget section */"
