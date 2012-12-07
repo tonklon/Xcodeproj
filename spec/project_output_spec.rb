@@ -29,6 +29,10 @@ module ProjectSpecs
         @project.to_pbxproj.should.include "rootObject = E525238316245A900012E2BA /* Project object */;"
       end
 
+      it "output closing brace and newline at end" do
+        @project.to_pbxproj.should.end_with "\n}\n"
+      end
+
       it "output the objects" do
         @project.to_pbxproj.should.include "objects = {"
       end

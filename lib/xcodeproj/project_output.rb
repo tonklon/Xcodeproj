@@ -20,6 +20,8 @@ module Xcodeproj
       formatter.add_line "};"
       formatter.add_value_for_key root_object, "rootObject"
       formatter.unindent
+      formatter << "}"
+      formatter << ""
       formatter.formatted_file
     end
 
