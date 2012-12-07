@@ -8,7 +8,7 @@ module Xcodeproj
       formatter << "// !$*UTF8*$!"
       formatter << "{"
       formatter.indent
-      formatter << "archiveVersion = #{archive_version};"
+      formatter.add_value_for_key archive_version, "archiveVersion"
       formatter.unindent
       formatter.formatted_file
     end

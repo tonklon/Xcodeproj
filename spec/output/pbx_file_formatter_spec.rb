@@ -52,6 +52,13 @@ describe "Xcodeproj::PBXFileFormatter" do
     end
   end
 
+  describe "add key value pairs" do
+    it "adds an key value pair" do
+      @formatter.add_value_for_key "Foo", "Bar"
+      @formatter.lines.should.include "Bar = Foo;"
+    end
+  end
+
   describe "output" do
     it "returns string output" do
       @formatter.formatted_file.should == ""

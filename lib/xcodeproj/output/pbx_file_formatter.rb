@@ -29,6 +29,10 @@ module Xcodeproj
       @lines << "#{"\t" * @indentation_level}#{line}"
     end
 
+    def add_value_for_key (value, key)
+      add_line "#{key} = #{value};"
+    end
+
     def << (line)
       add_line line
     end
