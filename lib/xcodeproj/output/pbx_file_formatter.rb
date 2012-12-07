@@ -34,7 +34,12 @@ module Xcodeproj
     end
 
     def formatted_file
+      raise "Can not output invalid content" unless valid?
       @lines.join("\n")
+    end
+
+    def valid?
+      (@indentation_level == 0)
     end
   end
 end

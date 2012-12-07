@@ -9,6 +9,7 @@ module Xcodeproj
       formatter << "{"
       formatter.indent
       formatter << "archiveVersion = #{archive_version};"
+      formatter.unindent
       formatter.formatted_file
     end
   end

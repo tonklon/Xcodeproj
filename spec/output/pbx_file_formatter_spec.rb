@@ -76,4 +76,24 @@ describe "Xcodeproj::PBXFileFormatter" do
     end
   end
 
+  describe "validations" do
+    it "can be validated" do
+      @formatter.should.be.valid
+    end
+
+    it "is invalid with nonzero indentation level" do
+      @formatter.indent
+      @formatter.should.not.be.valid
+      @formatter.unindent
+      @formatter.should.be.valid
+    end
+
+    it "raises when trying to output invalid content" do
+      @formatter.indent
+      lambda {
+        @formatter.formatted_file
+      }.should.raise
+    end
+  end
+
 end
