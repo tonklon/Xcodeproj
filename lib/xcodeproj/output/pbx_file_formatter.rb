@@ -78,11 +78,23 @@ module Xcodeproj
       add_line "};"
     end
 
-    def add_array_value_for_key (value, key)
+    def add_array_value_for_key (values, key)
       add_line "#{key} = ("
       indent
-      value.each do |string|
-        add_line "#{quoted_string string},"
+      values.each do |value|
+        if value.is_a?(String)
+          add_line "#{quoted_string value},"
+        end
+        if value.is_a?(Hash)
+          add_line "{"
+          indent
+          value.keys.sort.each do |hash_key|
+            hash_value = value[hash_key]
+            add_value_for_key hash_value, hash_key
+          end
+          unindent
+          add_line "},"
+        end
       end
       unindent
       add_line ");"
