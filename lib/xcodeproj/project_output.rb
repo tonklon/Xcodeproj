@@ -27,6 +27,7 @@ module Xcodeproj
 
     def add_objects_to_formatter (formatter)
       objects_by_isa.keys.sort.each do |isa_group|
+        formatter.add_unindented_line ""
         formatter.add_unindented_line "/* Begin #{isa_group} section */"
         objects_in_section = objects_by_isa[isa_group]
         objects_in_section.sort!{|a,b| a.uuid <=> b.uuid}
