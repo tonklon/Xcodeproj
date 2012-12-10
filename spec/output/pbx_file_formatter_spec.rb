@@ -113,6 +113,64 @@ describe "Xcodeproj::PBXFileFormatter" do
       @formatter.add_value_for_key nil, "Bar"
       @formatter.lines.size.should == 0
     end
+
+    it "quotes string values containing whitespace" do
+      @formatter.add_value_for_key "Foo Bar", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo Bar\";"
+    end
+
+    it "quotes string values containing <square brackets>" do
+      @formatter.add_value_for_key "Foo<Bar", "Foo"
+      @formatter.add_value_for_key "Foo>Bar", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo<Bar\";"
+      @formatter.lines.should.include "Foo = \"Foo>Bar\";"
+    end
+
+    it "quotes string values containing (round braces)" do
+      @formatter.add_value_for_key "Foo(Bar", "Foo"
+      @formatter.add_value_for_key "Foo)Bar", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo(Bar\";"
+      @formatter.lines.should.include "Foo = \"Foo)Bar\";"
+    end
+
+    it "quotes string values containing {curly braces}" do
+      @formatter.add_value_for_key "Foo{Bar", "Foo"
+      @formatter.add_value_for_key "Foo}Bar", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo{Bar\";"
+      @formatter.lines.should.include "Foo = \"Foo}Bar\";"
+    end
+
+    it "quotes empty strings" do
+      @formatter.add_value_for_key "", "Foo"
+      @formatter.lines.should.include "Foo = \"\";"
+    end
+
+    it "does not quote strings containing dots. underscores_ and slashes/" do
+      @formatter.add_value_for_key "._/", "Foo"
+      @formatter.lines.should.include "Foo = ._/;"
+    end
+
+    it "escapes multiple newlines" do
+      @formatter.add_value_for_key "Foo\nBar\n", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo\\nBar\\n\";"
+    end
+
+    it "escapes newlines followed by something" do
+      @formatter.add_value_for_key "Foo\nBar", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo\\nBar\";"
+    end
+
+    # This is rather weird, but it's the way Xcode is doing it as far as my tests go.
+    it "does not escape the only newline if it is the end of the string" do
+      @formatter.add_value_for_key "Foo\n", "Foo"
+      @formatter.lines.should.include "Foo = \"Foo\n\";"
+    end
+
+    it "escapes quotes" do
+      @formatter.add_value_for_key "\"", "Foo"
+      @formatter.lines.should.include "Foo = \"\\\"\";"
+    end
+
   end
 
   describe "output" do

@@ -49,13 +49,22 @@ module Xcodeproj
         return
       end
       if (value.respond_to?(:reference_comment) && value.respond_to?(:uuid))
-        add_string_value_for_key "#{value.uuid} /* #{value.reference_comment} */", key
+        add_string_value_for_key value.uuid, key, value.reference_comment
         return
       end
     end
 
-    def add_string_value_for_key (value, key)
-      add_line "#{key} = #{value};"
+    def add_string_value_for_key (value, key, value_comment = nil)
+      comment_string = value_comment.nil? ? "" : " /* #{value_comment} */"
+      add_line "#{quoted_string key} = #{quoted_string value}#{comment_string};"
+    end
+
+    def quoted_string (string)
+      quoted = string.gsub('"',"\\\\\"")
+      quoted.gsub!("\n","\\\\n") unless (quoted.count("\n") < 2 && quoted.end_with?("\n"))
+      quoted = "\"#{quoted}\"" if quoted =~/[^[[:alnum:]]\._\/;]/
+      quoted = "\"\"" if quoted.size == 0
+      quoted
     end
 
     def add_hash_value_for_key (value, key)
