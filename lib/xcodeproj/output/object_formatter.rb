@@ -40,6 +40,8 @@ module Xcodeproj
               end
               formatter.unindent
               formatter.add_line ");"
+            when :references_by_keys
+              formatter.add_value_for_key attribute.get_value(self).to_a, attribute.plist_name
           end
         end
 
