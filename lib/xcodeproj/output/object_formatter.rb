@@ -21,21 +21,25 @@ module Xcodeproj
         def output_attributes_to_formatter (formatter)
           formatter.add_value_for_key self.isa, "isa"
           self.class.attributes.sort {|a,b| a.plist_name <=> b.plist_name}.each do |attribute|
-            case attribute.type
-              when :simple
-                formatter.add_value_for_key attribute.get_value(self), attribute.plist_name
-              when :to_one
-                formatter.add_value_for_key attribute.get_value(self), attribute.plist_name
-              when :to_many
-                formatter.add_line "#{attribute.plist_name} = ("
-                formatter.indent
-                attribute.get_value(self).each do |object|
-                  comment = object.reference_comment.nil? ? "" : " /* #{object.reference_comment} */"
-                  formatter.add_line "#{object.uuid}#{comment},"
-                end
-                formatter.unindent
-                formatter.add_line ");"
-            end
+            output_attribute_to_formatter attribute, formatter
+          end
+        end
+
+        def output_attribute_to_formatter (attribute, formatter)
+          case attribute.type
+            when :simple
+              formatter.add_value_for_key attribute.get_value(self), attribute.plist_name
+            when :to_one
+              formatter.add_value_for_key attribute.get_value(self), attribute.plist_name
+            when :to_many
+              formatter.add_line "#{attribute.plist_name} = ("
+              formatter.indent
+              attribute.get_value(self).each do |object|
+                comment = object.reference_comment.nil? ? "" : " /* #{object.reference_comment} */"
+                formatter.add_line "#{object.uuid}#{comment},"
+              end
+              formatter.unindent
+              formatter.add_line ");"
           end
         end
 
