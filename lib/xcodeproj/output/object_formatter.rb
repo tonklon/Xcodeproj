@@ -50,4 +50,15 @@ module Xcodeproj
   end
 end
 
+require 'xcodeproj/output/object/build_configuration'
+require 'xcodeproj/output/object/build_file'
+require 'xcodeproj/output/object/build_phase'
+require 'xcodeproj/output/object/build_rule'
+require 'xcodeproj/output/object/configuration_list'
+require 'xcodeproj/output/object/container_item_proxy'
+require 'xcodeproj/output/object/file_reference'
+require 'xcodeproj/output/object/group'
+require 'xcodeproj/output/object/native_target'
+require 'xcodeproj/output/object/reference_proxy'
 require 'xcodeproj/output/object/root_object'
+require 'xcodeproj/output/object/target_dependency'
