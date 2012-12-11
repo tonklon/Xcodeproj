@@ -246,7 +246,7 @@ module Xcodeproj
       projpath = projpath.to_s
       @project_name = File.basename(projpath,'.xcodeproj')
       FileUtils.mkdir_p(projpath)
-      Xcodeproj.write_plist(to_plist, File.join(projpath, 'project.pbxproj'))
+      File.write(File.join(projpath, 'project.pbxproj'),to_pbxproj)
     end
 
 

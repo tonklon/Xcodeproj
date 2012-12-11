@@ -120,11 +120,11 @@ module ProjectSpecs
         @project.project_name.should == "Pods"
       end
 
-      it "can open a project and save it without altering any information" do
-        plist = Xcodeproj.read_plist(fixture_path("Sample Project/Cocoa Application.xcodeproj/project.pbxproj"))
-        @project.save_as(File.join(temporary_directory, 'Pods.xcodeproj'))
-        project_file = (temporary_directory + 'Pods.xcodeproj/project.pbxproj')
-        Xcodeproj.read_plist(project_file.to_s).should == plist
+      it "can open a project and save it without altering any character" do
+        original_project = File.read(fixture_path("Sample Project/Cocoa Application.xcodeproj/project.pbxproj"))
+        @project.save_as(File.join(temporary_directory, 'Cocoa Application.xcodeproj'))
+        project_file = (temporary_directory + 'Cocoa Application.xcodeproj/project.pbxproj')
+        File.read(project_file.to_s).should == original_project
       end
     end
 
