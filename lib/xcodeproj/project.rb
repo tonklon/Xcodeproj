@@ -64,6 +64,10 @@ module Xcodeproj
     #
     attr_reader :root_object
 
+    # @return [String] the base filename of the projects .xcodeproj wrapper. Is set through new and save_to
+    #
+    attr_reader :project_name
+
     # Creates a new Project instance or initializes one with the data of an
     # existing Xcode document.
     #
@@ -88,6 +92,8 @@ module Xcodeproj
       if xcodeproj
         file = File.join(xcodeproj, 'project.pbxproj')
         plist = Xcodeproj.read_plist(file.to_s)
+
+        @project_name = File.basename(xcodeproj,'.xcodeproj')
 
         @archive_version =  plist['archiveVersion']
         @object_version  =  plist['objectVersion']
@@ -238,6 +244,7 @@ module Xcodeproj
     #
     def save_as(projpath)
       projpath = projpath.to_s
+      @project_name = File.basename(projpath,'.xcodeproj')
       FileUtils.mkdir_p(projpath)
       Xcodeproj.write_plist(to_plist, File.join(projpath, 'project.pbxproj'))
     end

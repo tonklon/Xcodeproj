@@ -25,6 +25,11 @@ module ProjectSpecs
       it "initializes to the last known archive version" do
         @project.object_version.should == Xcodeproj::Constants::LAST_KNOWN_OBJECT_VERSION.to_s
       end
+
+      it "initializes it's project_name to nil" do
+        @project.project_name.should == nil
+      end
+
       it "sets itself as the owner of the root object" do
         @project.root_object.referrers.should == [@project]
       end
@@ -82,6 +87,10 @@ module ProjectSpecs
         @project["Cocoa Application"].should.not.be.nil
       end
 
+      it "sets the project name to the basename xcodeproj is was initialized with" do
+        @project.project_name.should == "Cocoa Application"
+      end
+
       # This ensures that there is no loss (or modification) of information by
       # going to the object tree and serializing it back to a plist.
       #
@@ -106,6 +115,11 @@ module ProjectSpecs
       end
 
       extend SpecHelper::TemporaryDirectory
+      it "sets the project name to the basename xcodeproj is written to" do
+        @project.save_as(File.join(temporary_directory, 'Pods.xcodeproj'))
+        @project.project_name.should == "Pods"
+      end
+
       it "can open a project and save it without altering any information" do
         plist = Xcodeproj.read_plist(fixture_path("Sample Project/Cocoa Application.xcodeproj/project.pbxproj"))
         @project.save_as(File.join(temporary_directory, 'Pods.xcodeproj'))

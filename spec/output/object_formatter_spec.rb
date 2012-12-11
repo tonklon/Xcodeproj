@@ -238,7 +238,7 @@ describe "Object output" do
         LastUpgradeCheck = 0450;
         ORGANIZATIONNAME = CocoaPods;
       };
-      buildConfigurationList = E525238616245A900012E2BA /* Build configuration list for PBXProject "?????" */;
+      buildConfigurationList = E525238616245A900012E2BA /* Build configuration list for PBXProject "Cocoa Application" */;
       compatibilityVersion = "Xcode 3.1";
       developmentRegion = English;
       hasScannedForEncodings = 0;
@@ -406,7 +406,7 @@ describe "Object output" do
   it "outputs XCConfigurationList objects" do
     output_of_object_with_uuid('E525238616245A900012E2BA').should ==
         <<-EXPECTED_OUTPUT.chomp("\n").gsub(/^    /,"").gsub(/(?<=  )?  /,"\t")
-    E525238616245A900012E2BA /* Build configuration list for PBXProject "?????" */ = {
+    E525238616245A900012E2BA /* Build configuration list for PBXProject "Cocoa Application" */ = {
       isa = XCConfigurationList;
       buildConfigurations = (
         E52523E116245A910012E2BA /* Debug */,
